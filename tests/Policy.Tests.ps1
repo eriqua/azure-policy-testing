@@ -79,6 +79,9 @@ Describe "Testing Azure Policies" {
             # Get-AzStorageAccount -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
             # | Test-RouteNextHopVirtualAppliance
             # | Should -BeTrue
+            
+            # Trigger compliance scan for resource group and wait for completion
+            $ResourceGroup | Complete-PolicyComplianceScan 
 
             Get-AzStorageAccount -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
             | Get-PolicyComplianceStateFromAssignment -PolicyAssignmentName "Audit-StorageAccount-PublicNetworkAccess"
