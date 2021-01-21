@@ -44,23 +44,23 @@ Describe "Testing Azure Policies" {
             | Get-PolicyComplianceState -PolicyName "Audit-Route-NextHopVirtualAppliance"
             | Should -BeFalse
         }
-        It "Should remediate route pointing to the virtual appliance (Policy: Deploy-Route-NextHopVirtualAppliance)" {
-            # Create route table and remove route pointing to the virtual appliance, which was appended by policy
-            $routeTableName = "route-table"
-            New-AzRouteTable `
-                -Name $routeTableName `
-                -ResourceGroupName $ResourceGroup.ResourceGroupName `
-                -Location $ResourceGroup.Location
-            | Remove-RouteNextHopVirtualAppliance
+        # It "Should remediate route pointing to the virtual appliance (Policy: Deploy-Route-NextHopVirtualAppliance)" {
+        #     # Create route table and remove route pointing to the virtual appliance, which was appended by policy
+        #     $routeTableName = "route-table"
+        #     New-AzRouteTable `
+        #         -Name $routeTableName `
+        #         -ResourceGroupName $ResourceGroup.ResourceGroupName `
+        #         -Location $ResourceGroup.Location
+        #     | Remove-RouteNextHopVirtualAppliance
             
-            # Remediate resource group and wait for completion
-            $ResourceGroup | Complete-PolicyRemediation -PolicyName "Deploy-Route-NextHopVirtualAppliance"
+        #     # Remediate resource group and wait for completion
+        #     $ResourceGroup | Complete-PolicyRemediation -PolicyName "Deploy-Route-NextHopVirtualAppliance"
             
-            # Verify that removed route pointing to the virtual appliance was remediated by policy
-            Get-AzRouteTable -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $routeTableName
-            | Test-RouteNextHopVirtualAppliance
-            | Should -BeTrue
-        }
+        #     # Verify that removed route pointing to the virtual appliance was remediated by policy
+        #     Get-AzRouteTable -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $routeTableName
+        #     | Test-RouteNextHopVirtualAppliance
+        #     | Should -BeTrue
+        # }
     }
 
     AfterEach {
