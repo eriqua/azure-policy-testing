@@ -78,7 +78,7 @@ function Get-PolicyComplianceStateFromAssignment {
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [ValidateNotNull()]
-        [Microsoft.Azure.Commands.Network.Models.PSResourceId]$Resource,
+        [Microsoft.Azure.Commands.Management.Storage.Models.PSStorageAccount]$Resource,
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$PolicyAssignmentName
