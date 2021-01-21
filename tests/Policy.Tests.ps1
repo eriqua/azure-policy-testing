@@ -63,6 +63,29 @@ Describe "Testing Azure Policies" {
         # }
     }
 
+    Context "When storage account is created" -Tag storage-account-create {
+        It "Should audit public network access (Policy: Audit-StorageAccount-PublicNetworkAccess)" {
+            # Create route table
+            $storageAccountName = -join ((97..122) | Get-Random -Count 15 | % {[char]$_})
+
+            New-AzStorageAccount `
+                -ResourceGroupName $ResourceGroup.ResourceGroupName `
+                -AccountName $storageAccountName `
+                -Location $ResourceGroup.Location `
+                -SkuName Standard_GRS
+            
+            # Verify that storage account is incompliant
+            # Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
+            # Get-AzStorageAccount -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
+            # | Test-RouteNextHopVirtualAppliance
+            # | Should -BeTrue
+
+            Get-AzStorageAccount -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
+            | Get-PolicyComplianceStateFromAssignment -PolicyAssignmentName "Audit-StorageAccount-PublicNetworkAccess"
+            | Should -BeFalse
+        }
+    }
+
     AfterEach {
         Remove-AzResourceGroup -Name $ResourceGroup.ResourceGroupName -Force
     }

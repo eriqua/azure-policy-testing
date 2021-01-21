@@ -74,6 +74,32 @@ function Get-PolicyComplianceState {
     return $compliant
 }
 
+function Get-PolicyComplianceStateFromAssignment {
+    param (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [ValidateNotNull()]
+        [Microsoft.Azure.Commands.Network.Models.PSResourceId]$Resource,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$PolicyAssignmentName
+    )
+
+    $policyAssignment = Get-AzPolicyAssignment | Where-Object { $_.Properties.DisplayName -eq $PolicyAssignmentName }
+    
+    if ($null -eq $policyAssignment) {
+        $scope = "/subscriptions/$((Get-AzContext).Subscription.Id)"
+        throw "Policy Assignment '$($PolicyAssignmentName)' was not found at scope '$($scope)'."
+    }
+
+    $compliant = (
+        Get-AzPolicyState -PolicyAssignmentName $policyAssignment.Name 
+        | Where-Object { $_.ResourceId -eq $Resource.Id } 
+        | Select-Object -Property ComplianceState
+    ).ComplianceState -eq "Compliant"
+
+    return $compliant
+}
+
 function Get-RouteNextHopVirtualAppliance {
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
