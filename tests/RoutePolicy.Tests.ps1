@@ -63,8 +63,8 @@ Describe "Testing Route Azure Policies" {
         }
     }
 
-    # AfterEach {
-    #     Remove-AzResourceGroup -Name $ResourceGroup.ResourceGroupName -Force
-    # }
+    AfterEach {
+        Remove-AzResourceGroup -Name $ResourceGroup.ResourceGroupName -Force
+    }
 }
 
