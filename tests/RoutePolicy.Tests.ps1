@@ -27,23 +27,23 @@ Describe "Testing Route Azure Policies" {
     }
 
     Context "When route is deleted" -Tag route-delete {
-        # It "Should audit route pointing to the virtual appliance (Audit-Route-NextHopVirtualAppliance)" {
-        #     # Create route table and remove route pointing to the virtual appliance, which was appended by policy
-        #     $routeTableName = "route-table"
-        #     $routeTable = New-AzRouteTable `
-        #         -Name $routeTableName `
-        #         -ResourceGroupName $ResourceGroup.ResourceGroupName `
-        #         -Location $ResourceGroup.Location
-        #     | Remove-RouteNextHopVirtualAppliance
+        It "Should audit route pointing to the virtual appliance (Audit-Route-NextHopVirtualAppliance)" {
+            # Create route table and remove route pointing to the virtual appliance, which was appended by policy
+            $routeTableName = "route-table"
+            $routeTable = New-AzRouteTable `
+                -Name $routeTableName `
+                -ResourceGroupName $ResourceGroup.ResourceGroupName `
+                -Location $ResourceGroup.Location
+            | Remove-RouteNextHopVirtualAppliance
 
-        #     # Trigger compliance scan for resource group and wait for completion
-        #     $ResourceGroup | Complete-PolicyComplianceScan 
+            # Trigger compliance scan for resource group and wait for completion
+            $ResourceGroup | Complete-PolicyComplianceScan 
 
-        #     # Verify that route table is incompliant
-        #     $routeTable 
-        #     | Get-PolicyComplianceState -PolicyName "Audit-Route-NextHopVirtualAppliance"
-        #     | Should -BeFalse
-        # }
+            # Verify that route table is incompliant
+            $routeTable 
+            | Get-PolicyComplianceState -PolicyName "Audit-Route-NextHopVirtualAppliance"
+            | Should -BeFalse
+        }
         It "Should remediate route pointing to the virtual appliance (Policy: Deploy-Route-NextHopVirtualAppliance)" {
             # Create route table and remove route pointing to the virtual appliance, which was appended by policy
             $routeTableName = "route-table"
