@@ -10,26 +10,26 @@ Describe "Testing Storage Azure Policies" {
         $ResourceGroup = New-AzResourceGroup -Name (New-Guid).Guid -Location "northeurope"
     }
 
-    # Context "When storage account is created" -Tag storage-account-create {
-    #     It "Should audit public network access (Policy: Audit-StorageAccount-PublicNetworkAccess)" {
-    #         # Create storage account
-    #         $storageAccountName = -join ((97..122) | Get-Random -Count 15 | % {[char]$_})
+    Context "When storage account is created" -Tag storage-account-create {
+        It "Should audit public network access (Policy: Audit-StorageAccount-PublicNetworkAccess)" {
+            # Create storage account
+            $storageAccountName = -join ((97..122) | Get-Random -Count 15 | % {[char]$_})
 
-    #         New-AzStorageAccount `
-    #             -ResourceGroupName $ResourceGroup.ResourceGroupName `
-    #             -AccountName $storageAccountName `
-    #             -Location $ResourceGroup.Location `
-    #             -SkuName Standard_GRS
+            New-AzStorageAccount `
+                -ResourceGroupName $ResourceGroup.ResourceGroupName `
+                -AccountName $storageAccountName `
+                -Location $ResourceGroup.Location `
+                -SkuName Standard_GRS
 
-    #         # Trigger compliance scan for resource group and wait for completion
-    #         $ResourceGroup | Complete-PolicyComplianceScan 
+            # Trigger compliance scan for resource group and wait for completion
+            $ResourceGroup | Complete-PolicyComplianceScan 
 
-    #         # Verify that storage account is incompliant
-    #         Get-AzStorageAccount -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
-    #         | Get-PolicyComplianceStateFromAssignment -PolicyAssignmentName "Audit-StorageAccount-PublicNetworkAccess"
-    #         | Should -BeFalse
-    #     }
-    # }
+            # Verify that storage account is incompliant
+            Get-AzStorageAccount -ResourceGroupName $ResourceGroup.ResourceGroupName -Name $storageAccountName
+            | Get-PolicyComplianceStateFromAssignment -PolicyAssignmentName "Audit-StorageAccount-PublicNetworkAccess"
+            | Should -BeFalse
+        }
+    }
 
     AfterEach {
         Remove-AzResourceGroup -Name $ResourceGroup.ResourceGroupName -Force
