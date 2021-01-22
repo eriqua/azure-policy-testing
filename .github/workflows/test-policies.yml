@@ -80,12 +80,12 @@ jobs:
       shell: pwsh
       run: |
         # Serial
-        # Invoke-Pester -Output Detailed -CI 
+        Invoke-Pester -Output Detailed -CI 
 
         # Parallel
-        $job = Get-ChildItem -Path "./tests" -Exclude "*.psm1" 
-        | ForEach-Object -Parallel { 
-          Invoke-Pester -Path $_ -Output None -PassThru -CI  
-        } -ThrottleLimit 10 -AsJob
-        $testResults = $job | Wait-Job | Receive-Job
+        # $job = Get-ChildItem -Path "./tests" -Exclude "*.psm1" 
+        # | ForEach-Object -Parallel { 
+        #   Invoke-Pester -Path $_ -Output None -PassThru -CI  
+        # } -ThrottleLimit 10 -AsJob
+        # $testResults = $job | Wait-Job | Receive-Job
 
