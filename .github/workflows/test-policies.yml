@@ -79,4 +79,13 @@ jobs:
     - name: Test Azure Policies
       shell: pwsh
       run: |
-        Invoke-Pester -Output Detailed -CI
+        # Serial
+        Invoke-Pester -Output Detailed -CI 
+
+        # Parallel
+        # $job = Get-ChildItem -Path "./tests" -Exclude "*.psm1" 
+        # | ForEach-Object -Parallel { 
+        #   Invoke-Pester -Path $_ -Output None -PassThru -CI  
+        # } -ThrottleLimit 10 -AsJob
+        # $testResults = $job | Wait-Job | Receive-Job
+

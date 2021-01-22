@@ -1,0 +1,13 @@
+{
+    "properties": {
+        "displayName": "Audit-StorageAccount-PublicNetworkAccess",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/34c877ad-507e-4c82-993e-3452a6e0ad3c",
+        "scope": "/subscriptions/#{AZURE_SUBSCRIPTION_ID}#",
+        "notScopes": [],
+        "parameters": {},
+        "enforcementMode": "Default"
+    },
+    "id": "/subscriptions/#{AZURE_SUBSCRIPTION_ID}#/providers/Microsoft.Authorization/policyAssignments/Storage_PNA",
+    "type": "Microsoft.Authorization/policyAssignments",
+    "name": "Storage_PNA"
+}

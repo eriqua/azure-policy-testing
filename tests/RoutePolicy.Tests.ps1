@@ -1,6 +1,6 @@
 Import-Module "$($($PSScriptRoot))/Policy.Utils.psm1" -Force
 
-Describe "Testing Azure Policies" {
+Describe "Testing Route Azure Policies" {
     BeforeEach {
         # Suppress unused variable warning caused by Pester scoping.
         # See also: https://pester.dev/docs/usage/setup-and-teardown#scoping
