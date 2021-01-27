@@ -2,6 +2,8 @@
 
 # Testing Azure Policy
 
+Change
+
 ## Introduction
 This repository outlines an automated testing approach for Azure Policies. The approach is fundamentally based on behavior-driven development (BDD) to improve communication between developers, security experts and compliance officers. The PowerShell testing framework Pester, Azure PowerShell and GitHub Actions are used in conjunction to automate the tests and run them as part of a DevOps pipeline. After the problem statement, the solution is described in more detail including how to set it up in your Azure environment.
 
